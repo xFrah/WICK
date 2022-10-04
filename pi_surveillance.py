@@ -132,7 +132,7 @@ while True:
         while True:
             data = parse_serial(arduino.readline())
             if not data:
-                break
+                continue
             if len(data) != 8:
                 continue
             uuid = datetime.now().strftime('%Y%m-%d%H-%M%S-') + str(uuid4())
