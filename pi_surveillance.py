@@ -58,6 +58,11 @@ arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
 
 # loop over the frames of the video
 while True:
+
+    if input() != "q":
+        continue
+    print("Taking snapshot")
+
     # grab the current frame and initialize the occupied/unoccupied
     # text
     original_frame = vs.read()
@@ -66,9 +71,6 @@ while True:
 
     # resize the frame, convert it to grayscale, and blur it
     frame = imutils.resize(original_frame, width=500)
-
-    if input() != "q":
-        continue
 
 #    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 #    gray = cv2.GaussianBlur(gray, (21, 21), 0)
