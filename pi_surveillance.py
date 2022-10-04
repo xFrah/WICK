@@ -124,7 +124,7 @@ while True:
 
 #        cv2.imshow("Thresh", thresh)
 #        cv2.imshow("Frame Delta", frameDelta)
-        cv2.imshow("Image", frame)
+        #cv2.imshow("Image", frame)
         key = cv2.waitKey(1) & 0xFF
 
         # if the `q` key is pressed, break from the lop
@@ -144,7 +144,9 @@ while True:
             im = Image.fromarray(image)
             im = im.convert("L")
             im.save(uuid + "-[SPECTRO].png")
-            cv2.imshow("Image", cv2.imread(uuid + "-[SPECTRO].png"))
+            # concatenate image Horizontally
+            horizontal = np.concatenate((original_frame, cv2.imread(uuid + "-[SPECTRO].png")), axis=1)
+            cv2.imshow("Image", horizontal)
             cv2.waitKey(500)
             break
             #image = create_image(data, 255, 255, 1000)
