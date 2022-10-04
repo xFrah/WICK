@@ -56,6 +56,8 @@ avg = None
 
 arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
 
+print("Ready")
+
 # loop over the frames of the video
 while True:
 
