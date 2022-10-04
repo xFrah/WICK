@@ -31,7 +31,11 @@ def create_image(values, height, width, max_spectrometer_value):
 
 
 def parse_serial(stringa):
-    return [int(x) for x in str(stringa).lstrip("b'").replace("\\r\\n'", "").split(", ") if x != ""]
+    try:
+        return [int(x) for x in str(stringa).lstrip("b'").replace("\\r\\n'", "").split(", ") if x != ""]
+    except ValueError:
+        print("Error while parsing serial: " + stringa)
+        return None
 
 
 # construct the argument parser and parse the arguments
@@ -127,6 +131,8 @@ while True:
         #if key == ord("q"):
         while True:
             data = parse_serial(arduino.readline())
+            if not data:
+                break
             if len(data) != 8:
                 continue
             uuid = datetime.now().strftime('%Y%m-%d%H-%M%S-') + str(uuid4())
