@@ -124,25 +124,27 @@ while True:
         key = cv2.waitKey(1) & 0xFF
 
         # if the `q` key is pressed, break from the lop
-        if key == ord("q"):
-            while True:
-                data = parse_serial(arduino.readline())
-                if len(data) != 8:
-                    continue
-                uuid = datetime.now().strftime('%Y%m-%d%H-%M%S-') + str(uuid4())
-                im = Image.fromarray(original_frame)
-                im.save(uuid + ".png")
-                with open(uuid + ".txt", "w+") as f:
-                    f.write(str(data))
-                image = create_image(data, len(original_frame), len(original_frame[0]), 1000)
-                im = Image.fromarray(image)
-                im = im.convert("L")
-                im.save(uuid + "-[SPECTRO].png")
-                break
-                #image = create_image(data, 255, 255, 1000)
-                #im = Image.fromarray(image)
-                #im = im.convert("L")
-                #im.save("spectro.jpeg")
-                #img = cv2.imread("spectro.jpeg")
-                #cv2.imshow("Image", img)
-                #cv2.waitKey(500)
+        #if key == ord("q"):
+        while True:
+            data = parse_serial(arduino.readline())
+            if len(data) != 8:
+                continue
+            uuid = datetime.now().strftime('%Y%m-%d%H-%M%S-') + str(uuid4())
+            im = Image.fromarray(original_frame)
+            im.save(uuid + ".png")
+            with open(uuid + ".txt", "w+") as f:
+                f.write(str(data))
+            image = create_image(data, len(original_frame), len(original_frame[0]), 1000)
+            im = Image.fromarray(image)
+            im = im.convert("L")
+            cv2.imshow("Image", im)
+            im.save(uuid + "-[SPECTRO].png")
+            cv2.waitKey(500)
+            break
+            #image = create_image(data, 255, 255, 1000)
+            #im = Image.fromarray(image)
+            #im = im.convert("L")
+            #im.save("spectro.jpeg")
+            #img = cv2.imread("spectro.jpeg")
+            #cv2.imshow("Image", img)
+
