@@ -143,8 +143,8 @@ while True:
             image = create_image(data, len(original_frame), len(original_frame[0]), 1000)
             im = Image.fromarray(image)
             im = im.convert("L")
-            cv2.imshow("Image", im)
             im.save(uuid + "-[SPECTRO].png")
+            cv2.imshow("Image", cv2.imread(uuid + "-[SPECTRO].png"))
             cv2.waitKey(500)
             break
             #image = create_image(data, 255, 255, 1000)
