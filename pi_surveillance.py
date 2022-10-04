@@ -54,7 +54,7 @@ print("[INFO] warming up...")
 time.sleep(conf["camera_warmup_time"])
 avg = None
 
-arduino = serial.Serial(port='COM3', baudrate=115200, timeout=.1)
+arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
 
 # loop over the frames of the video
 while True:
