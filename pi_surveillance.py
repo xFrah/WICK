@@ -161,8 +161,8 @@ while True:
             im = im.convert("L")
             im.save("images/" + uuid + "-[SPECTRO].png")
             # concatenate image Horizontally
-            horizontal = np.concatenate((original_frame, cv2.imread("images/" + uuid + "-[SPECTRO].png")), axis=1)
-            cv2.imshow("Image", horizontal)
+            #horizontal = np.concatenate((original_frame, cv2.imread("images/" + uuid + "-[SPECTRO].png")), axis=1)
+            #cv2.imshow("Image", horizontal)
             cv2.waitKey(500)
             break
             # image = create_image(data, 255, 255, 1000)
