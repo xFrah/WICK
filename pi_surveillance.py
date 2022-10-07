@@ -26,7 +26,7 @@ def normalize(height, maximum, n):
 
 def create_image(values, height, width, max_spectrometer_value):
     pixel_values = [((i + 1) * (255 // len(values))) for i in range(len(values))]
-    print(pixel_values)
+    #print(pixel_values)
     band_width = width // len(values)
     base = np.zeros((height, width))
     for i, row in enumerate(base):
@@ -153,6 +153,7 @@ while True:
                 continue
             if len(data) != 6:
                 continue
+            print(data)
             uuid = datetime.now().strftime('%Y%m-%d%H-%M%S-') + str(uuid4())
             im = Image.fromarray(original_frame)
             im.save("images/" + uuid + ".png")
