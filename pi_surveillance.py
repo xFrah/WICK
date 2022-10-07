@@ -150,7 +150,9 @@ while True:
         # if key == ord("q"):
         while True:
             time.sleep(1.5)
-            data = parse_serial(arduino.readline())
+            raw = arduino.readline()
+            print(raw)
+            data = parse_serial(raw)
             if not data:
                 continue
             if len(data) != 6:
