@@ -7,6 +7,8 @@ import tensorflow as tf
 from keras.api._v2.keras import Sequential
 from keras.api._v2.keras import layers
 
+import tempfile
+
 print(tf.__version__)
 
 batch_size = 5
@@ -120,3 +122,30 @@ plt.plot(epochs_range, val_loss, label='Validation Loss')
 plt.legend(loc='upper right')
 plt.title('Training and Validation Loss')
 plt.show()
+
+MODEL_DIR = tempfile.gettempdir()
+version = 1
+export_path = os.path.join(MODEL_DIR, str(version))
+print('export_path = {}\n'.format(export_path))
+
+tf.keras.models.save_model(
+    model,
+    export_path,
+    overwrite=True,
+    include_optimizer=True,
+    save_format=None,
+    signatures=None,
+    options=None
+)
+
+print("Model saved")
+
+# Convert the model
+converter = tf.lite.TFLiteConverter.from_saved_model(export_path) # path to the SavedModel directory
+tflite_model = converter.convert()
+
+# Save the model.
+with open('model.tflite', 'wb') as f:
+  f.write(tflite_model)
+
+print("Model converted")
