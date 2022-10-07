@@ -7,6 +7,7 @@ import imutils
 import json
 import time
 import cv2
+import os
 import numpy as np
 from PIL import Image
 from datetime import datetime
@@ -36,7 +37,6 @@ def create_image(values, height, width, max_spectrometer_value):
 
 
 def parse_serial(stringa):
-    print("Parsing string")
     try:
         return [int(float(x)) for x in str(stringa).lstrip("b'").replace("\\r\\n'", "").split(", ") if x != ""]
     except ValueError:
@@ -66,6 +66,8 @@ warnings.filterwarnings("ignore")
 conf = json.load(open("conf.json"))
 client = None
 
+os.system("sudo chmod 666 /dev/ttyACM0")
+
 vs = VideoStream(src=0).start()
 
 # allow the camera to warmup, then initialize the average frame, last
@@ -76,14 +78,14 @@ avg = None
 
 arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
 
-print("Ready")
+print("[INFO] Ready")
 
 # loop over the frames of the video
 while True:
 
     if input() != "q":
         continue
-    print("Taking snapshot")
+    print("[INFO] Taking snapshot")
 
     # grab the current frame and initialize the occupied/unoccupied
     # text
