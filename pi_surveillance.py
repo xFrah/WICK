@@ -148,6 +148,7 @@ while True:
         # if key == ord("q"):
         while True:
             arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200)
+            time.sleep(1.5)
             while not arduino.is_open:
                 pass
             print("[INFO] Serial connection open")
