@@ -153,15 +153,15 @@ while True:
                 continue
             uuid = datetime.now().strftime('%Y%m-%d%H-%M%S-') + str(uuid4())
             im = Image.fromarray(original_frame)
-            im.save(uuid + ".png")
-            with open(uuid + ".txt", "w+") as f:
+            im.save("images/" + uuid + ".png")
+            with open("images/" + uuid + ".txt", "w+") as f:
                 f.write(str(data))
             image = create_image(data, len(original_frame), len(original_frame[0]), 1000)
             im = Image.fromarray(image)
             im = im.convert("L")
-            im.save(uuid + "-[SPECTRO].png")
+            im.save("images/" + uuid + "-[SPECTRO].png")
             # concatenate image Horizontally
-            horizontal = np.concatenate((original_frame, cv2.imread(uuid + "-[SPECTRO].png")), axis=1)
+            horizontal = np.concatenate((original_frame, cv2.imread("images/" + uuid + "-[SPECTRO].png")), axis=1)
             cv2.imshow("Image", horizontal)
             cv2.waitKey(500)
             break
