@@ -148,6 +148,9 @@ while True:
         # if the `q` key is pressed, break from the lop
         # if key == ord("q"):
         while True:
+            while not arduino.is_open:
+                pass
+            print("[INFO] Serial connection open")
             raw = arduino.readline()
             arduino.close()
             print(raw)
