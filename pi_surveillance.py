@@ -146,21 +146,22 @@ while True:
 
         # if the `q` key is pressed, break from the lop
         # if key == ord("q"):
+        arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200)
+        print("[INFO] Serial connection open")
         while True:
-            arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200)
-            time.sleep(1.5)
             while not arduino.is_open:
                 pass
-            print("[INFO] Serial connection open")
             raw = arduino.readline()
-            arduino.close()
             print(raw)
             data = parse_serial(raw)
             if not data:
                 continue
             if len(data) != 6:
                 continue
-            print(data)
+            print("[INIT] " + str(data))
+            while len(data := parse_serial(arduino.readline())) != 6:
+                pass
+            print("[CONFIRM] " + str(data))
             uuid = datetime.now().strftime('%Y%m-%d%H-%M%S-') + str(uuid4())
             im = Image.fromarray(original_frame)
             im.save("images/" + uuid + ".png")
@@ -174,6 +175,7 @@ while True:
             #horizontal = np.concatenate((original_frame, cv2.imread("images/" + uuid + "-[SPECTRO].png")), axis=1)
             #cv2.imshow("Image", horizontal)
             cv2.waitKey(500)
+            arduino.close()
             break
             # image = create_image(data, 255, 255, 1000)
             # im = Image.fromarray(image)
