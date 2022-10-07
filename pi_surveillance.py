@@ -149,6 +149,7 @@ while True:
         # if the `q` key is pressed, break from the lop
         # if key == ord("q"):
         while True:
+            time.sleep(1.5)
             data = parse_serial(arduino.readline())
             if not data:
                 continue
