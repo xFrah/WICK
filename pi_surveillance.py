@@ -149,7 +149,7 @@ while True:
             data = parse_serial(arduino.readline())
             if not data:
                 continue
-            if len(data) != 8:
+            if len(data) != 6:
                 continue
             uuid = datetime.now().strftime('%Y%m-%d%H-%M%S-') + str(uuid4())
             im = Image.fromarray(original_frame)
