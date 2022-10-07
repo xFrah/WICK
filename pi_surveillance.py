@@ -159,8 +159,9 @@ while True:
             if len(data) != 6:
                 continue
             print("[INIT] " + str(data))
-            while len(data := parse_serial(arduino.readline())) != 6:
-                pass
+            data = parse_serial(arduino.readline())
+            while len(data) != 6:
+                data = parse_serial(arduino.readline())
             print("[CONFIRM] " + str(data))
             uuid = datetime.now().strftime('%Y%m-%d%H-%M%S-') + str(uuid4())
             im = Image.fromarray(original_frame)
