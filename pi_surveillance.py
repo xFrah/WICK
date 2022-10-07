@@ -12,7 +12,7 @@ from PIL import Image
 from datetime import datetime
 from uuid import uuid4
 import serial
-import Servo
+# import Servo
 
 myservo = []
 closed_position = 0
@@ -91,7 +91,7 @@ while True:
     #    text = "Unoccupied"
 
     # resize the frame, convert it to grayscale, and blur it
-    frame = imutils.resize(original_frame, width=500)
+    # frame = imutils.resize(original_frame, width=500)
 
     #    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     #    gray = cv2.GaussianBlur(gray, (21, 21), 0)
