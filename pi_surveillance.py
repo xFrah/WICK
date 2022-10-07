@@ -67,7 +67,7 @@ warnings.filterwarnings("ignore")
 conf = json.load(open("conf.json"))
 client = None
 
-os.system("sudo chmod 666 /dev/ttyGS0")
+os.system("sudo chmod 666 /dev/ttymxc0")
 
 vs = VideoStream(src=0).start()
 
