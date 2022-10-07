@@ -85,7 +85,6 @@ while True:
     if input() != "q":
         continue
     print("[INFO] Taking snapshot")
-    arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200)
 
     # grab the current frame and initialize the occupied/unoccupied
     # text
@@ -148,6 +147,7 @@ while True:
         # if the `q` key is pressed, break from the lop
         # if key == ord("q"):
         while True:
+            arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200)
             while not arduino.is_open:
                 pass
             print("[INFO] Serial connection open")
