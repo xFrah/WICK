@@ -77,8 +77,6 @@ print("[INFO] warming up...")
 time.sleep(conf["camera_warmup_time"])
 avg = None
 
-arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
-
 print("[INFO] Ready")
 
 # loop over the frames of the video
@@ -87,6 +85,7 @@ while True:
     if input() != "q":
         continue
     print("[INFO] Taking snapshot")
+    arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200)
 
     # grab the current frame and initialize the occupied/unoccupied
     # text
@@ -149,8 +148,8 @@ while True:
         # if the `q` key is pressed, break from the lop
         # if key == ord("q"):
         while True:
-            time.sleep(1.5)
             raw = arduino.readline()
+            arduino.close()
             print(raw)
             data = parse_serial(raw)
             if not data:
