@@ -67,7 +67,7 @@ warnings.filterwarnings("ignore")
 conf = json.load(open("conf.json"))
 client = None
 
-os.system("sudo chmod 666 /dev/ttyACM0")
+os.system("sudo chmod 666 /dev/ttyGS0")
 
 vs = VideoStream(src=0).start()
 
@@ -146,7 +146,7 @@ while True:
 
         # if the `q` key is pressed, break from the lop
         # if key == ord("q"):
-        arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200)
+        arduino = serial.Serial(port='/dev/ttyGS0', baudrate=115200)
         print("[INFO] Serial connection open")
         while True:
             while not arduino.is_open:

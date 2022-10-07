@@ -4,16 +4,17 @@ import os
 import PIL
 import tensorflow as tf
 
-from tensorflow import keras
-from keras import layers
-from keras.models import Sequential
+from keras.api._v2.keras import Sequential
+from keras.api._v2.keras import layers
+
+print(tf.__version__)
 
 batch_size = 5
-img_height = 256
-img_width = 256
+img_height = 480
+img_width = 640
 
 train_ds = tf.keras.utils.image_dataset_from_directory(
-    "dataset",
+    r"C:\Users\fdimo\Desktop\coral_images\joint",
     validation_split=0.2,
     subset="training",
     color_mode="rgba",
@@ -22,7 +23,7 @@ train_ds = tf.keras.utils.image_dataset_from_directory(
     batch_size=batch_size)
 
 val_ds = tf.keras.utils.image_dataset_from_directory(
-    "dataset",
+    r"C:\Users\fdimo\Desktop\coral_images\joint",
     validation_split=0.2,
     subset="validation",
     color_mode="rgba",
@@ -53,39 +54,37 @@ print(np.min(first_image), np.max(first_image))
 
 num_classes = len(class_names)
 
-data_augmentation = keras.Sequential(
-  [
-    layers.RandomFlip("horizontal",
-                      input_shape=(img_height,
-                                  img_width,
-                                  3)),
-    layers.RandomRotation(0.1),
-    layers.RandomZoom(0.1),
-  ]
-)
+# data_augmentation = keras.Sequential(
+#  [
+#    layers.RandomFlip("horizontal",
+#                      input_shape=(img_height,
+#                                  img_width,
+#                                  3)),
+#    layers.RandomRotation(0.1),
+#    layers.RandomZoom(0.1),
+#  ]
+# )
 
-plt.figure(figsize=(10, 10))
-for images, _ in train_ds.take(1):
-    for i in range(9):
-        augmented_images = data_augmentation(images)
-        ax = plt.subplot(3, 3, i + 1)
-        plt.imshow(augmented_images[0].numpy().astype("uint8"))
-        plt.axis("off")
+# plt.figure(figsize=(10, 10))
+# for images, _ in train_ds.take(1):
+#    for i in range(9):
+#        augmented_images = data_augmentation(images)
+#        ax = plt.subplot(3, 3, i + 1)
+#        plt.imshow(augmented_images[0].numpy().astype("uint8"))
+#        plt.axis("off")
 
 
 model = Sequential([
-  data_augmentation,
-  layers.Rescaling(1./255),
-  layers.Conv2D(16, 3, padding='same', activation='relu'),
-  layers.MaxPooling2D(),
-  layers.Conv2D(32, 3, padding='same', activation='relu'),
-  layers.MaxPooling2D(),
-  layers.Conv2D(64, 3, padding='same', activation='relu'),
-  layers.MaxPooling2D(),
-  layers.Dropout(0.2),
-  layers.Flatten(),
-  layers.Dense(128, activation='relu'),
-  layers.Dense(num_classes)
+    layers.Rescaling(1. / 255, input_shape=(img_height, img_width, 4)),
+    layers.Conv2D(16, 3, padding='same', activation='relu'),
+    layers.MaxPooling2D(),
+    layers.Conv2D(32, 3, padding='same', activation='relu'),
+    layers.MaxPooling2D(),
+    layers.Conv2D(64, 3, padding='same', activation='relu'),
+    layers.MaxPooling2D(),
+    layers.Flatten(),
+    layers.Dense(128, activation='relu'),
+    layers.Dense(num_classes)
 ])
 
 model.compile(optimizer='adam',
@@ -93,11 +92,11 @@ model.compile(optimizer='adam',
               metrics=['accuracy'])
 model.summary()
 
-epochs = 15
+epochs = 20
 history = model.fit(
-  train_ds,
-  validation_data=val_ds,
-  epochs=epochs
+    train_ds,
+    validation_data=val_ds,
+    epochs=epochs
 )
 
 acc = history.history['accuracy']
