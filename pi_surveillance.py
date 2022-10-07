@@ -38,7 +38,7 @@ def create_image(values, height, width, max_spectrometer_value):
 
 def parse_serial(stringa):
     try:
-        print(stringa)
+        #print(stringa)
         return [int(float(x)) for x in str(stringa).lstrip("b'").replace("\\r\\n'", "").split(", ") if x != ""]
     except ValueError:
         print("Error while parsing serial: " + stringa)
