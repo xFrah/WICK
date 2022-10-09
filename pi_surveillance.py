@@ -61,6 +61,15 @@ def open_thing(servo_number):
         time.sleep(0.1)
 
 
+# oh my god
+# Load the TFLite model and allocate tensors.
+interpreter = tflite.Interpreter(model_path="model.tflite")
+interpreter.allocate_tensors()
+
+# Get input and output tensors.
+input_details = interpreter.get_input_details()
+output_details = interpreter.get_output_details()
+
 # filter warnings, load the configuration and initialize the Dropbox
 # client
 warnings.filterwarnings("ignore")
@@ -173,10 +182,34 @@ while True:
             im = im.convert("L")
             im.save("images/" + uuid + "-[SPECTRO].png")
             # concatenate image Horizontally
-            #horizontal = np.concatenate((original_frame, cv2.imread("images/" + uuid + "-[SPECTRO].png")), axis=1)
-            #cv2.imshow("Image", horizontal)
+            horizontal = np.concatenate((original_frame, cv2.imread("images/" + uuid + "-[SPECTRO].png")), axis=1)
+            cv2.imshow("Image", horizontal)
             cv2.waitKey(500)
             arduino.close()
+            if True:
+                image = cv2.imread("images/" + uuid + ".png")
+                spectro = cv2.imread("images/" + uuid + "-[SPECTRO].png", cv2.IMREAD_UNCHANGED)
+                result = np.dstack((image, spectro))
+
+                # Test the model on random input data.
+                input_shape = input_details[0]['shape']
+                # print(input_shape)
+                # input_data = np.array(np.random.random_sample(input_shape), dtype=np.uint8)
+                # r"C:\Users\fdimo\Desktop\coral_images\
+                input_data = result
+                input_data = input_data.astype(np.float32)
+                # print(interpreter.get_input_details())
+                input_data = np.expand_dims(input_data, axis=0)
+                interpreter.set_tensor(input_details[0]['index'], input_data)
+
+                class_names = ['background', 'metal', 'paper', 'plastic']
+                interpreter.invoke()
+
+                # The function `get_tensor()` returns a copy of the tensor data.
+                # Use `tensor()` in order to get a pointer to the tensor.
+                output_data = interpreter.get_tensor(output_details[0]['index'])
+                print(output_data)
+                print(class_names[np.argmax(output_data[0])])
             break
             # image = create_image(data, 255, 255, 1000)
             # im = Image.fromarray(image)
