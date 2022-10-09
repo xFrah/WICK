@@ -15,15 +15,15 @@ batch_size = 5
 img_height = 480
 img_width = 640
 
-train_ds = tf.keras.utils.image_dataset_from_directory(
-    r"C:\Users\fdimo\Desktop\coral_images\joint",
-    validation_split=0.2,
-    subset="training",
-    color_mode="rgba",
-    seed=123,
-    image_size=(img_height, img_width),
-    batch_size=batch_size)
-
+# train_ds = tf.keras.utils.image_dataset_from_directory(
+#     r"C:\Users\fdimo\Desktop\coral_images\joint",
+#     validation_split=0.2,
+#     subset="training",
+#     color_mode="rgba",
+#     seed=123,
+#     image_size=(img_height, img_width),
+#     batch_size=batch_size)
+#
 # val_ds = tf.keras.utils.image_dataset_from_directory(
 #     r"C:\Users\fdimo\Desktop\coral_images\joint",
 #     validation_split=0.2,
@@ -124,7 +124,7 @@ train_ds = tf.keras.utils.image_dataset_from_directory(
 # plt.show()
 #
 # # #MODEL_DIR = tempfile.gettempdir()
-MODEL_DIR = r"C:\Users\fdimo\Desktop\WICK\tf_model"
+MODEL_DIR = r"tf_model"
 version = 1
 export_path = os.path.join(MODEL_DIR, str(version))
 
@@ -182,7 +182,7 @@ with open('model.tflite', 'wb') as f:
 
 print("Model converted")
 
-new_path = r"C:\Users\fdimo\Desktop\coral_images\3-[FINAL].png"
+new_path = r"3-[FINAL].png"
 
 img = tf.keras.utils.load_img(
     new_path, target_size=(img_height, img_width), color_mode="rgba"

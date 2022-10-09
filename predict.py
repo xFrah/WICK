@@ -1,4 +1,4 @@
-import tensorflow as tf
+import tflite_runtime.interpreter as tflite
 import cv2
 import numpy as np
 
@@ -31,7 +31,7 @@ output_data = interpreter.get_tensor(output_details[0]['index'])
 print(output_data)
 
 predictions = output_data
-score = tf.nn.softmax(predictions[0])
+score = tflite.nn.softmax(predictions[0])
 
 print(class_names)
 
