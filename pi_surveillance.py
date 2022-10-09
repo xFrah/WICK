@@ -33,6 +33,7 @@ def create_image(values, height, width, max_spectrometer_value):
     for i, row in enumerate(base):
         for y, (color, value) in enumerate(zip(pixel_values, values)):
             value = normalize(height, max_spectrometer_value, value)
+            value *= 2 if y < 2 else 5
             row[band_width * y:band_width * (y + 1)] = [color if value > i else 0] * band_width
     return base
 
@@ -183,7 +184,7 @@ while True:
             im = im.convert("L")
             im.save("images/" + uuid + "-[SPECTRO].png")
             # concatenate image Horizontally
-            horizontal = np.concatenate((original_frame, cv2.imread("images/" + uuid + "-[SPECTRO].png")), axis=1)
+            # horizontal = np.concatenate((original_frame, cv2.imread("images/" + uuid + "-[SPECTRO].png")), axis=1)
             # cv2.imshow("Image", horizontal)
             cv2.waitKey(500)
             arduino.close()

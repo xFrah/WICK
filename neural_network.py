@@ -23,7 +23,7 @@ img_width = 640
 #     seed=123,
 #     image_size=(img_height, img_width),
 #     batch_size=batch_size)
-#
+# 
 # val_ds = tf.keras.utils.image_dataset_from_directory(
 #     r"C:\Users\fdimo\Desktop\coral_images\joint",
 #     validation_split=0.2,
@@ -32,30 +32,30 @@ img_width = 640
 #     seed=123,
 #     image_size=(img_height, img_width),
 #     batch_size=batch_size)
-#
+# 
 # class_names = train_ds.class_names
 # print(class_names)
-#
+# 
 # for image_batch, labels_batch in train_ds:
 #     print(image_batch.shape)
 #     print(labels_batch.shape)
 #     break
-#
+# 
 # AUTOTUNE = tf.data.AUTOTUNE
-#
+# 
 # train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=AUTOTUNE)
 # val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
-#
+# 
 # normalization_layer = layers.Rescaling(1. / 255)
-#
+# 
 # normalized_ds = train_ds.map(lambda x, y: (normalization_layer(x), y))
 # image_batch, labels_batch = next(iter(normalized_ds))
 # first_image = image_batch[0]
 # # Notice the pixel values are now in `[0,1]`.
 # print(np.min(first_image), np.max(first_image))
-#
+# 
 # num_classes = len(class_names)
-#
+# 
 # # data_augmentation = keras.Sequential(
 # #  [
 # #    layers.RandomFlip("horizontal",
@@ -66,7 +66,7 @@ img_width = 640
 # #    layers.RandomZoom(0.1),
 # #  ]
 # # )
-#
+# 
 # # plt.figure(figsize=(10, 10))
 # # for images, _ in train_ds.take(1):
 # #    for i in range(9):
@@ -74,10 +74,10 @@ img_width = 640
 # #        ax = plt.subplot(3, 3, i + 1)
 # #        plt.imshow(augmented_images[0].numpy().astype("uint8"))
 # #        plt.axis("off")
-#
-#
+# 
+# 
 # model = Sequential([
-#     #layers.Rescaling(1. / 255, input_shape=(img_height, img_width, 4)),
+#     layers.Rescaling(1. / 255, input_shape=(img_height, img_width, 4)),
 #     layers.Conv2D(16, 3, padding='same', activation='relu', input_shape=(img_height, img_width, 4)),
 #     layers.MaxPooling2D(),
 #     layers.Conv2D(32, 3, padding='same', activation='relu'),
@@ -88,42 +88,42 @@ img_width = 640
 #     layers.Dense(128, activation='relu'),
 #     layers.Dense(num_classes)
 # ])
-#
+# 
 # model.compile(optimizer='adam',
 #               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
 #               metrics=['accuracy'])
 # model.summary()
-#
+# 
 # epochs = 20
 # history = model.fit(
 #     train_ds,
 #     validation_data=val_ds,
 #     epochs=epochs
 # )
-#
+# 
 # acc = history.history['accuracy']
 # val_acc = history.history['val_accuracy']
-#
+# 
 # loss = history.history['loss']
 # val_loss = history.history['val_loss']
-#
+# 
 # epochs_range = range(epochs)
-#
+# 
 # plt.figure(figsize=(8, 8))
 # plt.subplot(1, 2, 1)
 # plt.plot(epochs_range, acc, label='Training Accuracy')
 # plt.plot(epochs_range, val_acc, label='Validation Accuracy')
 # plt.legend(loc='lower right')
 # plt.title('Training and Validation Accuracy')
-#
+# 
 # plt.subplot(1, 2, 2)
 # plt.plot(epochs_range, loss, label='Training Loss')
 # plt.plot(epochs_range, val_loss, label='Validation Loss')
 # plt.legend(loc='upper right')
 # plt.title('Training and Validation Loss')
 # plt.show()
-#
-# # #MODEL_DIR = tempfile.gettempdir()
+
+# #MODEL_DIR = tempfile.gettempdir()
 MODEL_DIR = r"tf_model"
 version = 1
 export_path = os.path.join(MODEL_DIR, str(version))
@@ -144,11 +144,11 @@ export_path = os.path.join(MODEL_DIR, str(version))
 #
 # model.save(export_path)
 # print("Model saved")
-#
-#
+
+
 # Convert the model
 
-#oh my god
+# oh my god
 
 def representative_data_gen():
     dataset_list = tf.data.Dataset.list_files(r"C:\Users\fdimo\Desktop\coral_images\joint\*\*")
@@ -162,23 +162,23 @@ def representative_data_gen():
         yield [image]
 
 
-converter = tf.lite.TFLiteConverter.from_saved_model(export_path)  # path to the SavedModel directory
-# # This enables quantization
-# converter.optimizations = [tf.lite.Optimize.DEFAULT]
-# # This sets the representative dataset for quantization
-# converter.representative_dataset = representative_data_gen
-# # This ensures that if any ops can't be quantized, the converter throws an error
-# converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
-# # For full integer quantization, though supported types defaults to int8 only, we explicitly declare it for clarity.
-# converter.target_spec.supported_types = [tf.int8]
-# # These set the input and output tensors to uint8 (added in r2.3)
-# converter.inference_input_type = tf.uint8
-# converter.inference_output_type = tf.uint8
-tflite_model = converter.convert()
-
-# Save the model.
-with open('model.tflite', 'wb') as f:
-    f.write(tflite_model)
+# converter = tf.lite.TFLiteConverter.from_saved_model(export_path)  # path to the SavedModel directory
+# # # This enables quantization
+# # converter.optimizations = [tf.lite.Optimize.DEFAULT]
+# # # This sets the representative dataset for quantization
+# # converter.representative_dataset = representative_data_gen
+# # # This ensures that if any ops can't be quantized, the converter throws an error
+# # converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
+# # # For full integer quantization, though supported types defaults to int8 only, we explicitly declare it for clarity.
+# # converter.target_spec.supported_types = [tf.int8]
+# # # These set the input and output tensors to uint8 (added in r2.3)
+# # converter.inference_input_type = tf.uint8
+# # converter.inference_output_type = tf.uint8
+# tflite_model = converter.convert()
+#
+# # Save the model.
+# with open('model.tflite', 'wb') as f:
+#     f.write(tflite_model)
 
 print("Model converted")
 
