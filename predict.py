@@ -16,7 +16,7 @@ input_shape = input_details[0]['shape']
 # print(input_shape)
 # input_data = np.array(np.random.random_sample(input_shape), dtype=np.uint8)
 #r"C:\Users\fdimo\Desktop\coral_images\
-input_data = cv2.imread(r"predict-[FINAL].png", cv2.IMREAD_UNCHANGED)
+input_data = cv2.imread(r"3-[FINAL].png", cv2.IMREAD_UNCHANGED)
 input_data = input_data.astype(np.float32)
 # print(interpreter.get_input_details())
 input_data = np.expand_dims(input_data, axis=0)
