@@ -42,7 +42,7 @@ def parse_serial(stringa):
         #print(stringa)
         return [int(float(x)) for x in str(stringa).lstrip("b'").replace("\\r\\n'", "").split(", ") if x != ""]
     except ValueError:
-        print("Error while parsing serial: " + stringa)
+        print("Error while parsing serial: " + str(stringa))
         return None
 
 
