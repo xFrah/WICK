@@ -4,7 +4,7 @@ import numpy as np
 
 # oh my god
 # Load the TFLite model and allocate tensors.
-interpreter = tf.lite.Interpreter(model_path="model.tflite")
+interpreter = tflite.Interpreter(model_path="model.tflite")
 interpreter.allocate_tensors()
 
 # Get input and output tensors.
