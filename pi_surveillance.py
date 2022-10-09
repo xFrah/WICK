@@ -184,7 +184,7 @@ while True:
             im.save("images/" + uuid + "-[SPECTRO].png")
             # concatenate image Horizontally
             horizontal = np.concatenate((original_frame, cv2.imread("images/" + uuid + "-[SPECTRO].png")), axis=1)
-            cv2.imshow("Image", horizontal)
+            # cv2.imshow("Image", horizontal)
             cv2.waitKey(500)
             arduino.close()
             if True:
