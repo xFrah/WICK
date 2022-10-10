@@ -174,7 +174,8 @@ while True:
             while len(data) != 6:
                 data = parse_serial(arduino.readline())
             print("[CONFIRM] " + str(data))
-            uuid = datetime.now().strftime('%Y%m-%d%H-%M%S-') + str(uuid4())
+            # uuid = datetime.now().strftime('%Y%m-%d%H-%M%S-') + str(uuid4())
+            uuid = "prediction"
             im = Image.fromarray(original_frame)
             im.save("images/" + uuid + ".png")
             with open("images/" + uuid + ".txt", "w+") as f:
@@ -204,7 +205,7 @@ while True:
                 input_data = np.expand_dims(input_data, axis=0)
                 interpreter.set_tensor(input_details[0]['index'], input_data)
 
-                class_names = ['background', 'metal', 'paper', 'plastic']
+                class_names = ['can', 'paper', 'plastic', 'tissues']
                 interpreter.invoke()
 
                 # The function `get_tensor()` returns a copy of the tensor data.
